@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給最敬愛的老師們 - 畢業快樂！</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="initial-screen">
+        <h2>獻給我們最棒的老師！</h2>
+        <p>請選擇您想開啟的卡片：</p>
+        <div class="teacher-selection">
+            <button class="teacher-btn" data-teacher="jieyi">潔宜老師</button>
+            <button class="teacher-btn" data-teacher="junxuan">均璇老師</button>
+            <button class="teacher-btn" data-teacher="yanan">雅蔓老師</button>
+        </div>
+        <div id="secret-code-area" class="hidden">
+            <p>請輸入 <span id="selected-teacher-name"></span> 的神秘代碼 (4位數字)：</p>
+            <input type="password" id="secret-code-input" maxlength="4" pattern="\d*">
+            <button id="submit-code-btn">開啟卡片</button>
+            <p id="error-message" class="hidden">代碼錯誤，請再試一次！</p>
+        </div>
+    </div>
+
+    <div id="container" class="hidden">
+        <div id="opening-panels">
+            <div class="panel left-panel"></div>
+            <div class="panel right-panel"></div>
+            <div id="opening-text">
+                <h1>點擊這裡，開啟我們的感謝</h1>
+                <p>給 <span id="card-teacher-name-opening">老師</span></p>
+            </div>
+        </div>
+
+        <div id="cardContent" class="hidden">
+            <div class="card">
+                <h1 id="card-greeting">老師，謝謝您！</h1>
+                <img id="teacher-photo" src="teacher_generic.png" alt="感謝有您" class="teacher-photo-style">
+                <p id="card-message" class="message">
+                    <!-- 老師的訊息會顯示在這裡 -->
+                </p>
+                <div class="signature">
+                    <p>永遠愛您的學生 敬上</p>
+                    <p>✨🎓🌟</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="知足.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音訊播放。
+    </audio>
+
+    <div id="musicPlayer">
+        <div class="player-controls">
+            <button id="playerPlayPause">▶️</button>
+        </div>
+        <div class="player-info">
+            <div class="song-title"></div>
+            <div class="lyric-display-container">
+                <div class="lyric-line prev-lyric"></div>
+                <div class="lyric-line current-lyric"></div>
+                <div class="lyric-line next-lyric"></div>
+            </div>
+            <div class="progress-area">
+                <span class="current-time">0:00</span>
+                <input type="range" id="progressBar" value="0" step="0.1" min="0">
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
