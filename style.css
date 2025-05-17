@@ -1,0 +1,284 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans TC', sans-serif;
+    background: linear-gradient(135deg, #2c3e50, #3498db, #2980b9); /* 深藍漸層 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #ecf0f1; /* 淺色文字，適合深背景 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 80px; /* 為播放器預留空間 */
+}
+
+.hidden {
+    display: none !important; /* 確保徹底隱藏 */
+}
+
+/* ====== 初始畫面樣式 ====== */
+#initial-screen {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    color: #fff;
+}
+
+#initial-screen h2 {
+    color: #f1c40f; /* 金黃色標題 */
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.teacher-selection button.teacher-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.teacher-selection button.teacher-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+.teacher-selection button.teacher-btn.selected {
+    background-color: #e67e22; /* 選中時的顏色 */
+    box-shadow: 0 0 10px #e67e22;
+}
+
+
+#secret-code-area {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+#secret-code-area p {
+    margin-bottom: 10px;
+}
+#secret-code-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1.2em;
+    text-align: center;
+    width: 100px;
+    margin-bottom: 15px;
+    background-color: rgba(255,255,255,0.9);
+    color: #333;
+}
+#submit-code-btn {
+    background-color: #2ecc71; /* 綠色提交按鈕 */
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+#submit-code-btn:hover {
+    background-color: #27ae60;
+}
+#error-message {
+    color: #e74c3c; /* 紅色錯誤訊息 */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+/* ====== 卡片容器和開場面板 ====== */
+#container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#opening-panels {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 10;
+}
+.panel {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #2c3e50; /* 面板顏色 */
+    transition: transform 1s ease-in-out;
+}
+.left-panel { left: 0; transform-origin: left center; }
+.right-panel { right: 0; transform-origin: right center; }
+.left-panel.open { transform: translateX(-100%); }
+.right-panel.open { transform: translateX(100%); }
+
+#opening-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #f1c40f; /* 開場文字顏色 */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    transition: opacity 0.5s ease-in-out;
+    z-index: 11;
+}
+#opening-text h1 { font-size: 2.2em; margin-bottom: 10px; }
+#opening-text p { font-size: 1.3em; }
+
+/* ====== 卡片內容樣式 ====== */
+#cardContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 650px; /* 卡片寬度調整 */
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+    z-index: 5;
+    box-sizing: border-box;
+}
+#cardContent.visible { opacity: 1; pointer-events: auto; }
+
+.card {
+    background-color: rgba(255, 255, 255, 0.95); /* 卡片背景稍透明 */
+    color: #2c3e50; /* 卡片內文字顏色 */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    max-height: 85vh; /* 卡片最大高度 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding-bottom: 40px;
+}
+.card h1 {
+    color: #3498db; /* 標題顏色 */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2.3em;
+}
+.teacher-photo-style { /* 更新圖片樣式名稱 */
+    max-width: 60%; /* 調整照片大小 */
+    height: auto;
+    border-radius: 15px; /* 圓角更明顯 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin: 15px auto 25px auto;
+    border: 3px solid #3498db;
+}
+.message {
+    font-size: 1.1em; /* 調整訊息字體大小 */
+    line-height: 1.7;
+    color: #34495e;
+    text-align: left;
+    margin-bottom: 25px;
+}
+.signature {
+    font-size: 1em;
+    color: #7f8c8d;
+    text-align: right;
+    margin-top: 25px;
+}
+.signature p {
+    margin: 5px 0;
+}
+
+/* ====== 音訊播放器樣式 (與原版相似，可微調顏色) ====== */
+#musicPlayer {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) scale(1);
+    width: 95%; max-width: 400px; height: auto; min-height: 75px;
+    background-color: rgba(10, 20, 30, 0.75); /* 深一點的播放器背景 */
+    color: white; border-radius: 30px;
+    display: flex; align-items: center; padding: 5px 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 100; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-sizing: border-box;
+    overflow: hidden;
+    transition: width 0.6s ease-out, height 0.6s ease-out, min-height 0.6s ease-out, padding 0.6s ease-out, border-radius 0.6s ease-out, transform 0.6s ease-out, background-color 0.6s ease-out;
+    opacity: 1;
+}
+
+#musicPlayer.player-initial {
+    width: 120px; height: 35px; border-radius: 18px; padding: 0; opacity: 1;
+    background-color: rgba(10, 20, 30, 0.9); transform: translate(-50%, 0) scale(0.9); min-height: 35px;
+}
+
+.player-controls { flex-shrink: 0; margin-right: 10px; }
+
+#playerPlayPause {
+    background: none; border: none; color: #ecf0f1; font-size: 2em; cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center; height: 100%;
+}
+
+.player-info {
+    flex-grow: 1; overflow: hidden; display: flex; flex-direction: column;
+    justify-content: center; gap: 2px;
+}
+
+.song-title {
+    font-size: 0.85em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-align: left; height: 1.2em; line-height: 1.2em; opacity: 1; transition: opacity 0.3s ease-out;
+    flex-shrink: 0; color: #f1c40f; /* 歌名用金黃色 */
+}
+
+.lyric-display-container {
+    flex-grow: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; overflow: hidden;
+    height: 3.5em; margin: 2px 0;
+}
+
+.lyric-line {
+    font-size: 1em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center;
+    width: 100%; line-height: 1.2; transition: opacity 0.2s ease-out, color 0.2s ease-out, font-size 0.2s ease-out;
+}
+
+.lyric-line.current-lyric { font-size: 1.1em; color: #f1c40f; opacity: 1; } /* 當前歌詞也用金黃色 */
+.lyric-line.prev-lyric, .lyric-line.next-lyric { font-size: 0.9em; color: #bdc3c7; opacity: 0.7; }
+
+.progress-area { display: flex; align-items: center; font-size: 0.8em; flex-shrink: 0; }
+#progressBar {
+    flex-grow: 1; margin: 0 8px; -webkit-appearance: none; appearance: none; width: 100%; height: 4px;
+    background: #ffffff55; outline: none; opacity: 0.9; transition: opacity .2s; cursor: pointer; border-radius: 2px;
+}
+#progressBar:hover { opacity: 1; }
+#progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none; width: 12px; height: 12px; background: #f1c40f; /* 進度條拖曳點用金黃色 */
+    border: 1px solid rgba(0,0,0,0.2); border-radius: 50%; cursor: pointer; margin-top: -4px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+#progressBar::-moz-range-thumb {
+    width: 12px; height: 12px; background: #f1c40f; border: 1px solid rgba(0,0,0,0.2); border-radius: 50%; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.current-time, .duration { font-size: 0.9em; width: 35px; text-align: center; flex-shrink: 0; }
+
+#musicPlayer.player-initial .player-controls,
+#musicPlayer.player-initial .player-info { opacity: 0; pointer-events: none; transform: translateY(0); transition-delay: 0s; }
+
+#musicPlayer .player-controls.content-visible,
+#musicPlayer .player-info.content-visible {
+    opacity: 1; pointer-events: auto; transform: translateY(0);
+    transition-delay: 0.5s;
+}
