@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         yanan: {
             name: "雅蔓老師",
-            code: "2023",
+            code: "2024",
             photo: "teacher_generic.png",
             message: `最可愛的雅蔓老師：<br><br>
             五年級的生活因為有您，變得特別精彩！謝謝您總是那麼用心地準備每一堂課，讓我們在學習中找到樂趣。您就像陽光一樣，照亮了我們的教室，也溫暖了我們的心。每次看到您的笑容，就覺得心情好好！<br><br>
